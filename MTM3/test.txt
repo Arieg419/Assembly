@@ -1,0 +1,13 @@
+user add 11 Netanela 1991 F M
+user add 12 Omer 1988 M F
+user add 13 Dor 1994 M M
+user add 14 Omer 1991 M B
+report users
+user add 14 Omer 1991 M B
+#MTM_USER_ALREADY_EXISTS
+user add 14 Omer 2015 M B
+#MTM_INVALID_PARAMETERS
+user add 14 Omer 2015 B B
+#MTM_INVALID_PARAMETERS
+user add 14 Omer 2015 y a
+#MTM_INVALID_PARAMETERS
