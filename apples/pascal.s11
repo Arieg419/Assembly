@@ -1,0 +1,166 @@
+. = torg + 500
+main: mov n, r0	 ;ro Initialized as the size n 
+mov #Pascal, r1	 ;r1 on the beggining of the array
+mov #Pascal, r2  ;r2 points to the beg of pascal array
+mov #0,r3		 ;r3 is the column counter	
+mov n, r4		 ;r4 is the row counter
+mov n, r5
+dec r5
+
+;!!!!!!!!!!!!!! Done defining Variable !!!!!!!!!!!!!!!!
+mov #1, (r1)+ ;put 1 in first array cell 
+inc r3 ;increases one word
+row1: cmp r3,r0 ; this is our loop iterator, filling with zero
+beq decreaseRows ; lights Z flag
+mov #0, (r1)+
+inc r3
+jmp row1
+
+decreaseRows : dec r4
+initializeCounter : mov #1,r3      ;initialzing r3 again 
+
+Rows: 					           ; the other rows
+cmp r3,#1
+bne notFirst
+cmp r4, r5
+beq continue;
+inc r2
+inc r2
+continue:
+mov #1, (r1)+
+inc r3
+jmp Rows
+notFirst: 			
+mov #0,(r1); initializing value, might be garbage there
+add (r2)+,(r1); adding the upper left value
+add (r2),(r1)+; adding the upper value
+inc r3
+cmp r3, r0
+ble notFirst
+cmp r4, #1
+beq done ; if it's zero we are done looping
+dec r4
+jmp initializeCounter
+
+done: 
+jmp Palindrome
+
+
+;!!!!!!!!!!!!! Starting Palindrome func !!!!!!!!!!!!!
+
+Palindrome: 
+mov #Phrase, r0	 
+mov #Phrase, r1	
+mov #Res, r2   
+mov #0, r3		
+mov #0, r4	
+
+;!!!!!!!!!!!!!! Intializing Register to Zero !!!!!!!!!!!!!!!!!!
+
+endOfStringPtr:
+cmpb (r1), #0
+beq dontWantZero
+inc r1
+jmp endOfStringPtr
+
+;!!!!!!!!!!!!!! Getting length of String !!!!!!!!!
+
+dontWantZero: 
+dec r1
+jmp palindromeCheck
+
+palindromeCheck:
+cmpb (r1), #40
+beq decrR1
+
+cont1:
+cmpb (r0), #40
+beq increaseR0
+
+cont2:
+cmpb (r1), (r0) ;This checks the content of each cell
+bne notPalindrome 
+cmp r1, r0 ; This checks the addresses
+ble isPalindrome
+inc r0
+dec r1
+jmp palindromeCheck
+
+decrR1:
+dec r1
+jmp palindromeCheck
+
+increaseR0:
+inc r0
+jmp palindromeCheck
+
+isPalindrome: 
+
+movb #131, (r2)
+inc r2
+movb #145, (r2)
+inc r2
+movb #163, (r2)
+inc r2
+movb #40, (r2)
+inc r2
+movb #72, (r2)
+inc r2
+movb #51, (r2)
+inc r2
+movb #0, (r2)
+.even 
+jmp stop
+
+
+notPalindrome:
+movb #116, (r2)
+inc r2
+movb #157, (r2)
+inc r2
+movb #41, (r2)
+inc r2
+movb #0, (r2)
+cmpb (r2), #0
+jmp stop
+
+stop:
+halt
+
+;!!!!!!!!!!!!!! Declaring Variable for tests Cases !!!!!!!!!!!!
+n: .word 7
+Phrase: .ascii<never  odd          or even   >
+.byte 0
+.even
+Pascal: 
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+
+Res: 
+
+;!!!!!!!!!!! Stuff from old file for testing
+
+n: .word 7
+Phrase: .ascii<never  odd          or even   >
+.byte 0
+.even
+Pascal: 
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+.word 0, 0, 0, 0, 0, 0, 0
+
+Res: 
+
+
+
+
+

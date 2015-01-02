@@ -1,0 +1,10 @@
+
+.=torg + 4000
+
+n:		.word	6
+Phrase:	.ascii<do geese see  god>
+		.byte	0
+		.even
+Pascal:	.blkw	44   ;36 in octal base
+Res:	.blkw	4	
+		.even
